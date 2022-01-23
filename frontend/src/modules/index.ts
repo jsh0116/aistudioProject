@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import user from './user';
+import board from './board';
 import logger from 'redux-logger';
 import aiStudio from './aiStudio';
 
 export const store = configureStore({
   reducer: {
     aiStudio: aiStudio,
+    board: board,
     user: user,
   }, // reducer들을 정의
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger), // 미들웨어 정의
