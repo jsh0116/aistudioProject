@@ -4,6 +4,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 type AIStudioState = {
   appId: string;
   userKey: string;
+  clientToken: string;
   token: string;
   uuid: string;
   clientHostname: string;
@@ -13,6 +14,7 @@ type AIStudioState = {
 const initialState = {
   appId: 'aistudios.com',
   userKey: '6443234b-77d5-4013-bfd6-bb9399f317d9',
+  clientToken: '',
   token: '',
   uuid: '6443234b-77d5-4013-bfd6-bb9399f317d9',
   clientHostname: '',
@@ -28,6 +30,9 @@ export const aiStudioSlice = createSlice({
     },
     setUserKey: (state: AIStudioState, action: PayloadAction<string>) => {
       state.userKey = action.payload;
+    },
+    setClientToken: (state: AIStudioState, action: PayloadAction<string>) => {
+      state.clientToken = action.payload;
     },
     setToken: (state: AIStudioState, action: PayloadAction<string>) => {
       state.token = action.payload;
@@ -47,6 +52,7 @@ export const aiStudioSlice = createSlice({
 export const {
   setAppId,
   setUserKey,
+  setClientToken,
   setToken,
   setUuid,
   setClientHostname,
@@ -55,6 +61,7 @@ export const {
 
 export const getAppId = (state: RootState) => state.aiStudio.appId;
 export const getUserKey = (state: RootState) => state.aiStudio.userKey;
+export const getClientToken = (state: RootState) => state.aiStudio.clientToken;
 export const getToken = (state: RootState) => state.aiStudio.token;
 export const getUuid = (state: RootState) => state.aiStudio.uuid;
 export const getCiientHostname = (state: RootState) => state.aiStudio.clientHostname;

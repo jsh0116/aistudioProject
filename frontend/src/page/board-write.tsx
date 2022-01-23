@@ -49,7 +49,7 @@ const BoardWrite: React.FC = () => {
 			alert('입력되지 않은 정보가 있습니다.');
 			return;
 		}
-		const aiStudioService = new AIStudioService();
+		// const aiStudioService = new AIStudioService();
 		const boardService = new BoardService();		
 		//파일 업로드.
 		const formData = new FormData();

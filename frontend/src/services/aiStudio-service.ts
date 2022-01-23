@@ -7,7 +7,7 @@ export default class AIStudioService {
    */
   public async generateClientToken() {
     const res = await axios.get(
-      config.apiServer + '/api/odin/generateClientToken?appId=aistudios.com&userKey=6443234b-77d5-4013-bfd6-bb9399f317d9'
+      "/api/odin/generateClientToken?appId=aistudios.com&userKey=6443234b-77d5-4013-bfd6-bb9399f317d9"
     ).catch(function(error) {
       console.log(error);
       if (error.response) {
@@ -23,17 +23,17 @@ export default class AIStudioService {
    * @param token from generateClientToken
    * @returns 
    */
-  public async generateToken(appId: string, token: string) {
+  public async generateToken(clientToken: any) {
     const res = await axios.post(
-      config.apiServer + '/api/odin/generateToken',
+      '/api/odin/generateToken',
       {
-        appId,
+        appId: clientToken.appId,
         platform: 'web',
         isClientToken: true,
-        token,
+        token: clientToken.token,
         uuid: '6443234b-77d5-4013-bfd6-bb9399f317d9',
         sdk_v: '1.0',
-        clientHostname: 'aiStudio.com',
+        clientHostname: 'aistudios.com',
       }
     ).catch(function(error) {
       console.log(error);
@@ -51,7 +51,7 @@ export default class AIStudioService {
    */
   public async makeVideo(appId: string, token: string ,uuid: string) {
     const res = await axios.post(
-      config.apiServer + '/api/odin/makeVideo',
+      '/api/odin/makeVideo',
       {
         appId,
         platform: 'web',
@@ -59,9 +59,9 @@ export default class AIStudioService {
         token,
         uuid,
         sdk_v: '1.0',
-        clientHostname: 'aiStudio.com',
+        clientHostname: 'aistudios.com',
         language: 'ko',
-        text: '안녕하세요',
+        text: '안녕하세요 영어는 지원하지 않습니다',
         model: 'ysy',
         clothes: '1',
       }
@@ -79,9 +79,9 @@ export default class AIStudioService {
   /**
    * findProject returns project data associated with the video key
    */
-  public async findProject(appId: string, token: string, uuid: string) {
+  public async findProject(appId: string, key: string, token: string, uuid: string) {
     const res = await axios.post(
-      config.apiServer + '/api/odin/findProject',
+      '/api/odin/findProject',
       {
         appId,
         platform: 'web',
@@ -89,8 +89,8 @@ export default class AIStudioService {
         token,
         uuid,
         sdk_v: '1.0',
-        clientHostname: 'aiStudio.com',
-        key: "-MqSoa8y9i12ODr2OePb",
+        clientHostname: 'aistudios.com',
+        key,
       }
     ).catch(function (error) {
       console.log(error);
@@ -98,7 +98,6 @@ export default class AIStudioService {
         return error.response;
       }
     });
-
     console.log(res);
     return res.data;
   }
@@ -107,7 +106,7 @@ export default class AIStudioService {
    */
   public async findLog(appId: string, token: string, uuid: string) {
     const res = await axios.post(
-      config.apiServer + '/api/odin/findLog',
+      '/api/odin/findLog',
       {
         appId,
         platform: 'web',
@@ -115,7 +114,7 @@ export default class AIStudioService {
         token,
         uuid,
         sdk_v: '1.0',
-        clientHostname: 'aiStudio.com',
+        clientHostname: 'aistudios.com',
       }
     ).catch(function (error) {
       console.log(error);
