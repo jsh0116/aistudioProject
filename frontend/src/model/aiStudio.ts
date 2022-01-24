@@ -8,4 +8,5 @@ export interface AIStudio {
   uuid?: string;
   clientHostname?: string;
   key?: string;
+  textScript: string[];
 }

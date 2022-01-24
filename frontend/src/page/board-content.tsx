@@ -18,7 +18,7 @@ import AIStudioService from '../services/aiStudio-service';
 import { Comment } from '../model/comment';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { selectUserName, setUserName } from '../modules/user';
-import { getAppId, getUuid, getKey, setClientToken, setToken, setKey } from '../modules/aiStudio';
+import { getAppId, getUuid, getKey, getTextScript, setClientToken, setToken, setKey } from '../modules/aiStudio';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -53,6 +53,7 @@ const BoardContent: React.FC = () => {
   const appId = useAppSelector(getAppId);
   const uuid = useAppSelector(getUuid);
   const key = useAppSelector(getKey);
+  const textScript = useAppSelector(getTextScript);
   const dispatch = useAppDispatch();
 
   const [video, setVideo] = useState<string>("");
@@ -60,6 +61,7 @@ const BoardContent: React.FC = () => {
     id: 1, name: '', text: ''
   });
   const [loading, setLoading] = useState<boolean>(true);
+  const [scriptIndex, setScriptIndex] = useState<number>(0);
   
   // react-player 관련 State
   const [playIndex, setPlayIndex] = useState<number>(0);
@@ -91,7 +93,7 @@ const BoardContent: React.FC = () => {
     dispatch(setClientToken(clientTokenData));
     const tokenData = await aiStudioService.generateToken(clientTokenData);
     dispatch(setToken(tokenData));
-    const videoData = await aiStudioService.makeVideo(appId, tokenData.token, uuid);
+    const videoData = await aiStudioService.makeVideo(appId, tokenData.token, uuid, scriptIndex, textScript);
     dispatch(setKey(videoData.data.key));
     const progress = async () => {
       const projectData = await aiStudioService.findProject(appId, videoData.data.key, tokenData.token, uuid);

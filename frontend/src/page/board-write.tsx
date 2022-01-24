@@ -14,7 +14,7 @@ import AIStudioService from '../services/aiStudio-service';
 
 import { Board } from '../model/board';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { getAppId, getUserKey } from '../modules/aiStudio';
+import { getAppId, getUserKey, getTextScript, setTextScript } from '../modules/aiStudio';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -39,7 +39,7 @@ const BoardWrite: React.FC = () => {
 	// aiStudio
 	const appId = useAppSelector(getAppId);
 	const userKey = useAppSelector(getUserKey);
-
+	const textScript = useAppSelector(getTextScript);
 	const dispatch = useAppDispatch();
 	const [board, setBoard] = useState<Board>({title: '', file: ''});
 	const [file, setFile] = useState<any>(null);
@@ -59,7 +59,8 @@ const BoardWrite: React.FC = () => {
 		await boardService.uploadFile(formData);
 
 		const result = await boardService.write(board);
-		if(result) {
+		if(result !== 'write error') {
+			dispatch(setTextScript(result));
 			navigate('/board');
 		}else{
 			alert('등록 중 오류가 발생하였습니다.');

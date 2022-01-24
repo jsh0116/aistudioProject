@@ -9,6 +9,7 @@ type AIStudioState = {
   uuid: string;
   clientHostname: string;
   key: string;
+  textScript: string[];
 }
 
 const initialState = {
@@ -19,6 +20,7 @@ const initialState = {
   uuid: '6443234b-77d5-4013-bfd6-bb9399f317d9',
   clientHostname: '',
   key: '',
+  textScript:new Array<string>(),
 } as AIStudioState;
 
 export const aiStudioSlice = createSlice({
@@ -46,6 +48,9 @@ export const aiStudioSlice = createSlice({
     setKey: (state: AIStudioState, action: PayloadAction<string>) => {
       state.key = action.payload;
     },
+    setTextScript: (state: AIStudioState, action: PayloadAction<string[]>) => {
+      state.textScript = action.payload;
+    }, 
   },
 });
 
@@ -57,6 +62,7 @@ export const {
   setUuid,
   setClientHostname,
   setKey,
+  setTextScript,
 } = aiStudioSlice.actions;
 
 export const getAppId = (state: RootState) => state.aiStudio.appId;
@@ -66,5 +72,6 @@ export const getToken = (state: RootState) => state.aiStudio.token;
 export const getUuid = (state: RootState) => state.aiStudio.uuid;
 export const getCiientHostname = (state: RootState) => state.aiStudio.clientHostname;
 export const getKey = (state: RootState) => state.aiStudio.key;
+export const getTextScript = (state: RootState) => state.aiStudio.textScript;
 
 export default aiStudioSlice.reducer;

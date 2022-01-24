@@ -49,7 +49,7 @@ export default class AIStudioService {
   /**
    * makeVideo sends a video synthesis request and returns the video key
    */
-  public async makeVideo(appId: string, token: string ,uuid: string) {
+  public async makeVideo(appId: string, token: string ,uuid: string, playIndex: number, textScript: string[]) {
     const res = await axios.post(
       '/api/odin/makeVideo',
       {
@@ -61,7 +61,7 @@ export default class AIStudioService {
         sdk_v: '1.0',
         clientHostname: 'aistudios.com',
         language: 'ko',
-        text: '안녕하세요 영어는 지원하지 않습니다',
+        text: textScript[playIndex],
         model: 'ysy',
         clothes: '1',
       }
