@@ -87,7 +87,7 @@ export default class BoardService {
           return error.response;
         }
       });
-      
+      console.log(res.data);
       return res.data;
     }
 }

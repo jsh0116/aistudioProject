@@ -1,5 +1,6 @@
 ﻿import express, { Request, Response } from 'express';
 import asyncify from 'express-asyncify';
+
 import moment from 'moment'; //시간/날짜 관련 모듈.
 import multer from 'multer';
 import fs from 'fs';
@@ -8,6 +9,7 @@ import path from 'path';
 import { verifyToken } from '../authorization';
 import { BoardService } from '../services/board-service';
 import { Board } from '../model/board';
+import { getSlideNoteList } from '../pptUtil';
 
 //라우터에서 비동기 함수를 사용할 수 있게 한다.
 const router = asyncify(express.Router());
@@ -67,7 +69,9 @@ router.post('/write', async (request: Request, response: Response) => {
     };
     const result = await boardService.create(board);
     console.log(result);
-    response.status(201).send('success');
+    const slideNoteList = await getSlideNoteList(file);
+    // response.status(201).send('success');
+    response.send(slideNoteList);
   } catch (err) {
     response.status(400).send('write error');
   }
@@ -76,6 +80,7 @@ router.post('/write', async (request: Request, response: Response) => {
 //게시판 파일 업로드 요청.
 router.use('/uploadFile', verifyToken);
 router.post('/uploadFile', upload.single('file'), async (request: Request, response: Response) => {
+  console.log(request.file.filename);
   response.json({ url : `/img/${request.file.filename}`});
 });
 

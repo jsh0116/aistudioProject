@@ -59,7 +59,7 @@ const BoardWrite: React.FC = () => {
 		await boardService.uploadFile(formData);
 
 		const result = await boardService.write(board);
-		if(result === 'success') {
+		if(result) {
 			navigate('/board');
 		}else{
 			alert('등록 중 오류가 발생하였습니다.');
