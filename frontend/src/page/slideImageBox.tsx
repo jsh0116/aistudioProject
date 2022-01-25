@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './slideImage.scss';
+import './slide.css';
 import Carousel from 'react-material-ui-carousel';
 interface Props {
   slideImageInfo: any;
