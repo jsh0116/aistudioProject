@@ -44,9 +44,9 @@ router.post('/list', async (request: Request, response: Response) => {
   const { search, page } = request.body;
   try {
     const boardList: Board[] | null = await boardService.find(page, search);
-    if(!boardList) {
+    if (!boardList) {
       response.status(400).send('board list not exist');
-      return;   
+      return;
     }
 
     response.json(boardList);
@@ -60,7 +60,8 @@ router.use('/write', verifyToken);
 router.post('/write', async (request: Request, response: Response) => {
   const boardService = new BoardService();
   const convertAPIService = new ConvertAPIService();
-  const {title, file } = request.body;
+  const { title, file } = request.body;
+  console.log(request.body);
   try {
     let board: Board = {
       userId: response.locals.email,
@@ -89,7 +90,7 @@ router.post('/write', async (request: Request, response: Response) => {
 router.use('/uploadFile', verifyToken);
 router.post('/uploadFile', upload.single('file'), async (request: Request, response: Response) => {
   console.log(request.file.filename);
-  response.json({ url : `/img/${request.file.filename}`});
+  response.json({ url: `/img/${request.file.filename}` });
 });
 
 

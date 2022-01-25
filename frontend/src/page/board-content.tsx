@@ -44,7 +44,7 @@ type PlayList = {
 const BoardContent: React.FC = () => {
   const classes = useStyles();
   const location = useLocation();
-  const { title, userinfo, content, file} = location.state;
+  const { title, userinfo, content, file } = location.state;
   const [name, setName] = useState<any>('');
   const [email, setEmail] = useState<any>('');
   const userName = useAppSelector(selectUserName);
@@ -62,14 +62,14 @@ const BoardContent: React.FC = () => {
   });
   const [loading, setLoading] = useState<boolean>(true);
   const [scriptIndex, setScriptIndex] = useState<number>(0);
-  
+
   // react-player 관련 State
   const [playIndex, setPlayIndex] = useState<number>(0);
   const [playList, setPlayList] = useState<PlayList[]>([]);
 
   useEffect(() => {
     dispatch(setUserName(userName));
-    if(userinfo && userinfo.length > 0) {
+    if (userinfo && userinfo.length > 0) {
       setName(userinfo[0].name);
       setEmail(userinfo[0].email);
     }
@@ -93,7 +93,8 @@ const BoardContent: React.FC = () => {
     dispatch(setClientToken(clientTokenData));
     const tokenData = await aiStudioService.generateToken(clientTokenData);
     dispatch(setToken(tokenData));
-    const videoData = await aiStudioService.makeVideo(appId, tokenData.token, uuid, scriptIndex, textScript);
+    const allScript = textScript.join('\n');
+    const videoData = await aiStudioService.makeVideo(appId, tokenData.token, uuid, allScript);
     dispatch(setKey(videoData.data.key));
     const progress = async () => {
       const projectData = await aiStudioService.findProject(appId, videoData.data.key, tokenData.token, uuid);
@@ -113,7 +114,7 @@ const BoardContent: React.FC = () => {
   const getVideoList = async () => {
     try {
       await fetch(video)
-      .then(res => setPlayList(prevList => [...prevList, {index: playIndex, url: video}]));
+        .then(res => setPlayList(prevList => [...prevList, { index: playIndex, url: video }]));
     } catch (e) {
       console.log(e);
     }
@@ -132,7 +133,7 @@ const BoardContent: React.FC = () => {
    * React Player render
    */
   const playVideo = () => {
-    console.log(playList[playIndex].url);
+    // console.log(playList[playIndex].url);
     return (
       <div className='player-wrapper'>
         <ReactPlayer
@@ -144,77 +145,77 @@ const BoardContent: React.FC = () => {
           muted={true}
           controls={true}
           pip={true}
-          onEnded={() => {handleNextVideo(playIndex, playList)}}
+          onEnded={() => { handleNextVideo(playIndex, playList) }}
         />
       </div>
     );
   }
 
-    return (
-      <Container component="main" maxWidth="md">
-        <div className={classes.paper}>
-          <form className={classes.form} noValidate method='post'>
-            <Box border="1px solid #dfdfdf" borderRadius="10px" textAlign="left" padding="5px">작성자: {name}({email})</Box>
-            <Box border="1px solid #dfdfdf" borderRadius="10px" textAlign="left" padding="5px">제목 : {title}</Box>
-            <Box display="flex" flexDirection="row">
-              <Box m={1} />
-              <Box border="1px solid #dfdfdf" borderRadius="10px" textAlign="left" width="30%" height="500px" padding="5px" marginTop="10px">
-                발표자<br />
-                {loading === false ? playVideo() : <p>Loading...</p>}
-              </Box>
-              <Box border="1px solid #dfdfdf" borderRadius="10px" textAlign="left" width="80%" height="500px" padding="5px" marginTop="10px">PPT<br /></Box>
-            </Box>
-            <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center" border="1px solid #dfdfdf">
-              <Box width="150px">{userName}</Box>
-              <Box marginLeft={1} />
-              <Box width="100%">
-                <TextField
-                  variant="outlined"
-                  fullWidth size="small"
-                  value={comment.text}
-                  onChange={e => {
-                    let tempComment = { ...comment };
-                    tempComment.text = e.target.value;
-                    setComment(tempComment);
-                  }}
-                />
-              </Box>
-                <Box marginLeft={1} />
-                <Box width="150px">
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                    onClick={onSubmit}
-                  >
-                    보내기
-                  </Button>
-                </Box>
-            </Box>
+  return (
+    <Container component="main" maxWidth="md">
+      <div className={classes.paper}>
+        <form className={classes.form} noValidate method='post'>
+          <Box border="1px solid #dfdfdf" borderRadius="10px" textAlign="left" padding="5px">작성자: {name}({email})</Box>
+          <Box border="1px solid #dfdfdf" borderRadius="10px" textAlign="left" padding="5px">제목 : {title}</Box>
+          <Box display="flex" flexDirection="row">
             <Box m={1} />
-            <Box display="flex" flexDirection="row" justifyContent="flex-end">
+            <Box border="1px solid #dfdfdf" borderRadius="10px" textAlign="left" width="30%" height="500px" padding="5px" marginTop="10px">
+              발표자<br />
+              {loading === false ? playVideo() : <p>Loading...</p>}
+            </Box>
+            <Box border="1px solid #dfdfdf" borderRadius="10px" textAlign="left" width="80%" height="500px" padding="5px" marginTop="10px">PPT<br /></Box>
+          </Box>
+          <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center" border="1px solid #dfdfdf">
+            <Box width="150px">{userName}</Box>
+            <Box marginLeft={1} />
+            <Box width="100%">
+              <TextField
+                variant="outlined"
+                fullWidth size="small"
+                value={comment.text}
+                onChange={e => {
+                  let tempComment = { ...comment };
+                  tempComment.text = e.target.value;
+                  setComment(tempComment);
+                }}
+              />
+            </Box>
+            <Box marginLeft={1} />
+            <Box width="150px">
               <Button
                 type="submit"
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                onClick={onSubmit}
               >
-                수정
-              </Button>
-              <Button
-                type="button"
-                variant="contained"
-                color="secondary"
-                className={classes.submit}
-              >
-                삭제
+                보내기
               </Button>
             </Box>
-          </form>
-        </div>
-      </Container>
-    )
+          </Box>
+          <Box m={1} />
+          <Box display="flex" flexDirection="row" justifyContent="flex-end">
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              수정
+            </Button>
+            <Button
+              type="button"
+              variant="contained"
+              color="secondary"
+              className={classes.submit}
+            >
+              삭제
+            </Button>
+          </Box>
+        </form>
+      </div>
+    </Container>
+  )
 }
 
 export default BoardContent;

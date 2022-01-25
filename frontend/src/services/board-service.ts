@@ -19,9 +19,9 @@ export default class BoardService {
     const checkAccessToken = accessToken !== null ? accessToken : '';
 
     const res = await axios.post(
-      config.apiServer + '/board/list', 
+      config.apiServer + '/board/list',
       {},
-      { 
+      {
         headers: {
           'x-access-token': checkAccessToken
         }
@@ -32,62 +32,62 @@ export default class BoardService {
         return error;
       }
     });
-    
+
     return res.data as Board[];
   }
 
-    /**
-     * 파일 업로드를 요청합니다.
-     * @param formData
-     * @returns 
-     */
-    public async uploadFile(formData: FormData) {
-      const accessToken = this.getAccessToken();
-      const checkAccessToken = accessToken !== null ? accessToken : '';
+  /**
+   * 파일 업로드를 요청합니다.
+   * @param formData
+   * @returns 
+   */
+  public async uploadFile(formData: FormData) {
+    const accessToken = this.getAccessToken();
+    const checkAccessToken = accessToken !== null ? accessToken : '';
 
-      console.log(formData);
-      const res = await axios.post(
-        config.apiServer + '/board/uploadFile', 
-        formData,
-        { 
-          headers: {
-            'x-access-token': checkAccessToken
-          }
+    console.log(formData);
+    const res = await axios.post(
+      config.apiServer + '/board/uploadFile',
+      formData,
+      {
+        headers: {
+          'x-access-token': checkAccessToken
         }
-      ).catch(function (error) {
-        console.log(error);
-        if (error.response) {
-            return error.response;
-        }
-      });
-      
-      return res.data;
-    }
+      }
+    ).catch(function (error) {
+      console.log(error);
+      if (error.response) {
+        return error.response;
+      }
+    });
 
-    /**
-     * 글쓰기를 요청합니다.
-     * @param board 발표 게시판 
-     * @returns 
-     */
-    public async write(board: Board) {
-      const accessToken = this.getAccessToken();
-      const checkAccessToken = accessToken !== null ? accessToken : '';
+    return res.data;
+  }
 
-      const res = await axios.post(
-        config.apiServer + '/board/write', 
-        board,
-        { 
-          headers: {
-            'x-access-token': checkAccessToken
-          }
+  /**
+   * 글쓰기를 요청합니다.
+   * @param board 발표 게시판 
+   * @returns 
+   */
+  public async write(board: Board) {
+    const accessToken = this.getAccessToken();
+    const checkAccessToken = accessToken !== null ? accessToken : '';
+
+    const res = await axios.post(
+      config.apiServer + '/board/write',
+      board,
+      {
+        headers: {
+          'x-access-token': checkAccessToken
         }
-      ).catch(function (error) {
-        console.log(error);
-        if (error.response) {
-          return error.response;
-        }
-      });
-      console.log(res.data);
-      return res.data;
-    }
+      }
+    ).catch(function (error) {
+      console.log(error);
+      if (error.response) {
+        return error.response;
+      }
+    });
+    console.log(res.data);
+    return res.data;
+  }
 }

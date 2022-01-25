@@ -2,6 +2,7 @@
 
 /yarn-error.log
 
+/frontend/src/react-app-env.d.ts
 /frontend/node_modules
 /frontend/yarn-error.log
 /frontend/package-lock.json

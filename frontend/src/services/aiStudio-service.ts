@@ -1,5 +1,4 @@
 import axios from "axios";
-import config from '../config';
 
 export default class AIStudioService {
   /**
@@ -8,7 +7,7 @@ export default class AIStudioService {
   public async generateClientToken() {
     const res = await axios.get(
       "/api/odin/generateClientToken?appId=aistudios.com&userKey=6443234b-77d5-4013-bfd6-bb9399f317d9"
-    ).catch(function(error) {
+    ).catch(function (error) {
       console.log(error);
       if (error.response) {
         return error.response;
@@ -35,7 +34,7 @@ export default class AIStudioService {
         sdk_v: '1.0',
         clientHostname: 'aistudios.com',
       }
-    ).catch(function(error) {
+    ).catch(function (error) {
       console.log(error);
       if (error.response) {
         return error.response;
@@ -49,7 +48,7 @@ export default class AIStudioService {
   /**
    * makeVideo sends a video synthesis request and returns the video key
    */
-  public async makeVideo(appId: string, token: string ,uuid: string, playIndex: number, textScript: string[]) {
+  public async makeVideo(appId: string, token: string, uuid: string, script: string) {
     const res = await axios.post(
       '/api/odin/makeVideo',
       {
@@ -61,7 +60,7 @@ export default class AIStudioService {
         sdk_v: '1.0',
         clientHostname: 'aistudios.com',
         language: 'ko',
-        text: textScript[playIndex],
+        text: script,
         model: 'ysy',
         clothes: '1',
       }
