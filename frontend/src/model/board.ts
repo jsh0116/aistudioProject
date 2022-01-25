@@ -9,5 +9,5 @@ export interface Board {
   date?: Date;
   count?: number;
   userinfo?: any;
-  textScript?: string[];
+  // textScript?: string[];
 }

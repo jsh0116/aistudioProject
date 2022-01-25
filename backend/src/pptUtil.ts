@@ -1,4 +1,16 @@
 import PPTX2Json from 'pptx2json';
+import pptpng from 'ppt-png';
+
+export function getSlideImageList(file: string) {
+  // const result: string[] = [];
+  const converter = pptpng.create({
+    files: [file],
+    output: './'
+  });
+  const result = converter.convert();
+  console.log(result);
+  console.log('convertImage');
+}
 
 /**
  * PPTX Slide 노트 페이지 별 대본을 저장한 리스트

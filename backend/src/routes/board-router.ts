@@ -10,6 +10,7 @@ import { verifyToken } from '../authorization';
 import { BoardService } from '../services/board-service';
 import { Board } from '../model/board';
 import { getSlideNoteList } from '../pptUtil';
+import ConvertAPIService from '../services/convertAPI-service';
 
 //라우터에서 비동기 함수를 사용할 수 있게 한다.
 const router = asyncify(express.Router());
@@ -17,11 +18,11 @@ const router = asyncify(express.Router());
 /**
  * uploads 폴터 없으면 생성하기
  */
-fs.readdir('uploads', (error) => {
-  if (error) {
-    fs.mkdirSync('uploads');
-  }
-})
+// fs.readdir('uploads', (error) => {
+//   if (error) {
+//     fs.mkdirSync('uploads');
+//   }
+// })
 
 //업로드 규약을 정한다.
 const upload = multer({
@@ -58,6 +59,7 @@ router.post('/list', async (request: Request, response: Response) => {
 router.use('/write', verifyToken);
 router.post('/write', async (request: Request, response: Response) => {
   const boardService = new BoardService();
+  const convertAPIService = new ConvertAPIService();
   const {title, file } = request.body;
   try {
     let board: Board = {
@@ -69,9 +71,15 @@ router.post('/write', async (request: Request, response: Response) => {
     };
     const result = await boardService.create(board);
     console.log(result);
+    fs.readdir('uploads', (error) => {
+      if (error) {
+        fs.mkdirSync('uploads');
+      }
+    });
     const slideNoteList = await getSlideNoteList(file);
+    const imgInfoList = await convertAPIService.convertPPTXToJPG(file);
     // response.status(201).send('success');
-    response.send(slideNoteList);
+    response.send([slideNoteList, imgInfoList]);
   } catch (err) {
     response.status(400).send('write error');
   }
