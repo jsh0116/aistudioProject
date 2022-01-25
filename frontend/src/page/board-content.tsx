@@ -44,7 +44,7 @@ type PlayList = {
 const BoardContent: React.FC = () => {
   const classes = useStyles();
   const location = useLocation();
-  const { title, userinfo, content, file } = location.state;
+  const { title, userinfo, content, file, textScript, slideImageInfo } = location.state;
   const [name, setName] = useState<any>('');
   const [email, setEmail] = useState<any>('');
   const userName = useAppSelector(selectUserName);
@@ -53,7 +53,6 @@ const BoardContent: React.FC = () => {
   const appId = useAppSelector(getAppId);
   const uuid = useAppSelector(getUuid);
   const key = useAppSelector(getKey);
-  const textScript = useAppSelector(getTextScript);
   const dispatch = useAppDispatch();
 
   const [video, setVideo] = useState<string>("");
@@ -61,7 +60,6 @@ const BoardContent: React.FC = () => {
     id: 1, name: '', text: ''
   });
   const [loading, setLoading] = useState<boolean>(true);
-  const [scriptIndex, setScriptIndex] = useState<number>(0);
 
   // react-player 관련 State
   const [playIndex, setPlayIndex] = useState<number>(0);
@@ -163,7 +161,9 @@ const BoardContent: React.FC = () => {
               발표자<br />
               {loading === false ? playVideo() : <p>Loading...</p>}
             </Box>
-            <Box border="1px solid #dfdfdf" borderRadius="10px" textAlign="left" width="80%" height="500px" padding="5px" marginTop="10px">PPT<br /></Box>
+            <Box border="1px solid #dfdfdf" borderRadius="10px" textAlign="left" width="80%" height="500px" padding="5px" marginTop="10px">
+              PPT<br />
+            </Box>
           </Box>
           <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center" border="1px solid #dfdfdf">
             <Box width="150px">{userName}</Box>

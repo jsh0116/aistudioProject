@@ -61,10 +61,10 @@ const BoardWrite: React.FC = () => {
 		await boardService.uploadFile(formData);
 
 		const result = await boardService.write(board);
-		const [textScript, imgInfo] = result;
+		// const [textScript, imgInfo] = result;
 
 		if (result !== 'write error') {
-			dispatch(setTextScript(textScript));
+			// dispatch(setTextScript(textScript));
 			navigate('/board');
 		} else {
 			alert('등록 중 오류가 발생하였습니다.');

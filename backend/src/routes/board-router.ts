@@ -63,15 +63,7 @@ router.post('/write', async (request: Request, response: Response) => {
   const { title, file } = request.body;
   console.log(request.body);
   try {
-    let board: Board = {
-      userId: response.locals.email,
-      title: title,
-      file: file,
-      date: moment().toDate(),
-      count: 0,
-    };
-    const result = await boardService.create(board);
-    console.log(result);
+
     fs.readdir('uploads', (error) => {
       if (error) {
         fs.mkdirSync('uploads');
@@ -79,8 +71,20 @@ router.post('/write', async (request: Request, response: Response) => {
     });
     const slideNoteList = await getSlideNoteList(file);
     const imgInfoList = await convertAPIService.convertPPTXToJPG(file);
-    // response.status(201).send('success');
-    response.send([slideNoteList, imgInfoList]);
+    // console.log(imgInfoList);
+    let board: Board = {
+      userId: response.locals.email,
+      title: title,
+      file: file,
+      date: moment().toDate(),
+      count: 0,
+      textScript: slideNoteList,
+      slideImageInfo: imgInfoList,
+    };
+    const result = await boardService.create(board);
+    console.log(result);
+    response.status(201).send('success');
+    // response.send([slideNoteList, imgInfoList]);
   } catch (err) {
     response.status(400).send('write error');
   }
