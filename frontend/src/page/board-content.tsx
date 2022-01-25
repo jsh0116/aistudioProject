@@ -19,6 +19,7 @@ import { Comment } from '../model/comment';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { selectUserName, setUserName } from '../modules/user';
 import { getAppId, getUuid, getKey, getTextScript, setClientToken, setToken, setKey } from '../modules/aiStudio';
+import SlideImageBox from './slideImageBox';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -149,6 +150,13 @@ const BoardContent: React.FC = () => {
     );
   }
 
+  const renderSlideImage = () => {
+    const imageList: any[] = slideImageInfo;
+    return imageList.map((image, index) => {
+      return <img src={imageList[index].Url} alt=" " width="150px" height="200px" />
+    })
+  }
+
   return (
     <Container component="main" maxWidth="md">
       <div className={classes.paper}>
@@ -159,10 +167,12 @@ const BoardContent: React.FC = () => {
             <Box m={1} />
             <Box border="1px solid #dfdfdf" borderRadius="10px" textAlign="left" width="30%" height="500px" padding="5px" marginTop="10px">
               발표자<br />
-              {loading === false ? playVideo() : <p>Loading...</p>}
+              {loading === false && playVideo()}
             </Box>
             <Box border="1px solid #dfdfdf" borderRadius="10px" textAlign="left" width="80%" height="500px" padding="5px" marginTop="10px">
               PPT<br />
+              {/** 현재 react0material-ui-carousel 서브 모듈 버전 충돌로 인한 컴파일 오류로 임시 주석처리 했습니다 ㅠ  */}
+              {slideImageInfo && <SlideImageBox slideImageInfo={slideImageInfo} />}
             </Box>
           </Box>
           <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center" border="1px solid #dfdfdf">

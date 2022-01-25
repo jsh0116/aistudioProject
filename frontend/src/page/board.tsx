@@ -22,7 +22,7 @@ import { getBoardList, setBoardList } from '../modules/board';
 import BoardService from '../services/board-service';
 import { Board as BoardModel } from '../model/board';
 
-import config from '../config';
+// import PPTLogo from '../../public/images/PowerPointLogo';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { selectUserName } from '../modules/user';
 
@@ -90,7 +90,7 @@ function Board() {
 							{boardList.map((data, i) => (
 								<TableRow style={{ cursor: 'pointer' }} key={i} onClick={() => onClickItem(data)}>
 									<TableCell>{data.num}</TableCell>
-									<TableCell>{data.file && <img src={config.apiServer + '/uploads/' + data.file} alt=" " width="50px" height="50px" />}</TableCell>
+									<TableCell>{data.file && <img src="images/PowerPointLogo.png" alt=" " width="50px" height="50px" />}</TableCell>
 									<TableCell>{data.title}</TableCell>
 									<TableCell>{data.userinfo[0].name}</TableCell>
 									<TableCell>{data.date && dateFormatter(data.date)}</TableCell>
