@@ -132,7 +132,6 @@ const BoardContent: React.FC = () => {
    * React Player render
    */
   const playVideo = () => {
-    // console.log(playList[playIndex].url);
     return (
       <div className='player-wrapper'>
         <ReactPlayer
@@ -150,13 +149,6 @@ const BoardContent: React.FC = () => {
     );
   }
 
-  const renderSlideImage = () => {
-    const imageList: any[] = slideImageInfo;
-    return imageList.map((image, index) => {
-      return <img src={imageList[index].Url} alt=" " width="150px" height="200px" />
-    })
-  }
-
   return (
     <Container component="main" maxWidth="md">
       <div className={classes.paper}>
@@ -167,7 +159,7 @@ const BoardContent: React.FC = () => {
             <Box m={1} />
             <Box border="1px solid #dfdfdf" borderRadius="10px" textAlign="left" width="30%" height="500px" padding="5px" marginTop="10px">
               발표자<br />
-              {loading === false && playVideo()}
+              {loading === false ? playVideo() : <p>동영상 로딩중입니다...</p>}
             </Box>
             <Box border="1px solid #dfdfdf" borderRadius="10px" textAlign="left" width="80%" height="500px" padding="5px" marginTop="10px">
               PPT<br />
