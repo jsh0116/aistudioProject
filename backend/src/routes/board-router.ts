@@ -70,6 +70,7 @@ router.post('/write', async (request: Request, response: Response) => {
       }
     });
     const slideNoteList = await getSlideNoteList(file);
+    slideNoteList.reverse();
     const imgInfoList = await convertAPIService.convertPPTXToJPG(file);
     // console.log(imgInfoList);
     let board: Board = {

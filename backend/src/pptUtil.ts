@@ -28,7 +28,7 @@ export async function getSlideNoteList(file: string): Promise<string[]> {
     const cSld = data[note]['p:notes']['p:cSld'];
     cSld?.forEach(cSldObj => {
       const noteText = lookup(cSldObj, 'a:t');
-      if(noteText) {
+      if (noteText) {
         result.push(noteText[1][0]);
       }
     })
@@ -45,7 +45,7 @@ function lookup(obj: any, k: string) {
       return [k, value];
     }
 
-    if (typeof(value) === "object" && !Array.isArray(value)) {
+    if (typeof (value) === "object" && !Array.isArray(value)) {
       let y = lookup(value, k);
       if (y && y[0] == k) return y;
     }
