@@ -1,6 +1,6 @@
 ### AIStudio Project
 
-## 주제는 AIHuman을 이용한 PPT 발표 게시판입니다.
+## 게시판에 PPT 업로드 시 슬라이드 노트에 적힌 내용을 발표하는 AI Human 개인 프로젝트
 
 1. 스킬
     - Client : HTML/CSS, ReactJS, TypeScript, Redux.js, Material-UI
